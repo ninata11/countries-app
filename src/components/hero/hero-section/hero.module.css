@@ -1,0 +1,7 @@
+.container {
+  font-size: 20px;
+  border: 2px solid grey;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+}
