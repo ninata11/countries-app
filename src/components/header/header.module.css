@@ -1,6 +1,24 @@
-.header {
-  font-size: 30px;
-  padding: 10px;
-  background-color: grey;
-  color: white;
+.root {
+  top: 0;
+  position: static;
+  display: flex;
+  padding: 1rem;
+}
+.logo {
+  color: grey;
+  font-size: 25px;
+  margin-right: 20px;
+}
+.nav {
+  display: flex;
+  gap: 20px;
+  font-size: 24px;
+  align-items: center;
+}
+.nav_item {
+  font-size: 24px;
+  color: black;
+}
+.active_nav_item {
+  color: red;
 }
