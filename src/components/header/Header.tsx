@@ -14,7 +14,7 @@ const Header = () => {
         <h1 className={Styles.header}>Countries App</h1>
         </Link> 
         <div className={Styles.nav}>
-        <NavLink className={handleActiveNav} to="home">
+        <NavLink className={handleActiveNav} to="articles">
         <div>Articles</div>
         </NavLink>
         <NavLink className={handleActiveNav} to="contact">
