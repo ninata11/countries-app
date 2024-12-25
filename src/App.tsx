@@ -5,6 +5,8 @@ import DefaultLayout from './layouts/default'
 import AboutView from './pages/about/views/about'
 import ContactView from './pages/contact/view/contact'
 import ArticlesListView from './pages/articles/views/list'
+import SingleArticleView from './pages/articles/views/single'
+import { Suspense } from 'react'
 
 
 
@@ -16,9 +18,12 @@ const App = () => {
       <Routes>
         <Route element={<DefaultLayout/>}>
         <Route path="/" element={<div>This is HOME page</div>}/>
-          <Route path='articles' element={<ArticlesListView/>} />
-          <Route path='/about' element={<AboutView/>} />
-          <Route path='/contact' element={<ContactView/>} />
+          <Route path="articles" element={<Suspense fallback={<div>Loading...</div>}>
+          <ArticlesListView/>
+          </Suspense>} />
+          <Route path='articles/:id' element={<SingleArticleView/>} />
+          <Route path='about' element={<AboutView/>} />
+          <Route path='contact' element={<ContactView/>} />
         </Route>
       </Routes>
     

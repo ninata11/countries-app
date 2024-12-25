@@ -1,8 +1,9 @@
+import MyForm from "../form"
 
 
 const ContactInformation = () => {
   return (
-    <div>This is CONTACT</div>
+    <MyForm/>
   )
 }
 
