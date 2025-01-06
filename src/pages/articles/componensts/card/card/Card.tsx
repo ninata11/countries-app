@@ -3,18 +3,15 @@
 
 
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 
 
 
- const Card:React.FC<PropsWithChildren<{id: string}>> = ({
-  id, 
+
+ const Card:React.FC<PropsWithChildren<{id: string}>> = ({ 
   children}) => {
   
   return (
+<article>{children}</article>
 
-<Link style={{color:"black"}} to={`/articles/${id}`}>
-{children}
-</Link>
 )};
 export default Card

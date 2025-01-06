@@ -1,9 +1,10 @@
-
+import Styles from "../countries.module.css"
 
 const Germany = () => {
   return (
-    <div><h1>GERMANY</h1>
-    <p>Germany,[e] officially the Federal Republic of Germany,[f] is a country in Central Europe. It lies between the Baltic and North Sea to the north and the Alps to the south. Its sixteen constituent states have a total population of over 82 million in an area of 357,596 km2 (138,069 sq mi), making it the most populous member state of the European Union. It borders Denmark to the north, Poland and the Czech Republic to the east, Austria and Switzerland to the south, and France, Luxembourg, Belgium, and the Netherlands to the west. The nation's capital and most populous city is Berlin and its main financial centre is Frankfurt; the largest urban area is the Ruhr.
+    <div>
+      <h1 className={Styles.header}>GERMANY</h1>
+    <p className={Styles.para}>Germany,[e] officially the Federal Republic of Germany,[f] is a country in Central Europe. It lies between the Baltic and North Sea to the north and the Alps to the south. Its sixteen constituent states have a total population of over 82 million in an area of 357,596 km2 (138,069 sq mi), making it the most populous member state of the European Union. It borders Denmark to the north, Poland and the Czech Republic to the east, Austria and Switzerland to the south, and France, Luxembourg, Belgium, and the Netherlands to the west. The nation's capital and most populous city is Berlin and its main financial centre is Frankfurt; the largest urban area is the Ruhr.
 
 Settlement in the territory of modern Germany began in the Lower Paleolithic, with various tribes inhabiting it from the Neolithic onward, chiefly the Celts. Various Germanic tribes have inhabited the northern parts of modern Germany since classical antiquity. A region named Germania was documented before AD 100. In 962, the Kingdom of Germany formed the bulk of the Holy Roman Empire. During the 16th century, northern German regions became the centre of the Protestant Reformation. Following the Napoleonic Wars and the dissolution of the Holy Roman Empire in 1806, the German Confederation was formed in 1815.
 
