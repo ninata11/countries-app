@@ -1,79 +1,106 @@
-import { Suspense, useState } from "react"
-import Card from "../card/Card"
-import CardContant from "../cardContent/CardContant"
-import CardFooter from "../cardFooter/CardFooter"
-import CardHeader from "../cardHeader/CardHeader"
-import Styles from "../card/card.module.css"
-import { Link } from "react-router-dom"
+import { FormEvent, MouseEvent, Suspense, useReducer } from "react";
+import Card from "../card/Card";
+import CardContant from "../cardContent/CardContant";
+import CardFooter from "../cardFooter/CardFooter";
+import CardHeader from "../cardHeader/CardHeader";
+import Styles from "../card/card.module.css";
+import { Link } from "react-router-dom";
+import CardCreateForm from "../card-create-form/card-create-form";
+import { cardsReducer } from "./reducer/reducer";
+import cardsInitialState from "./reducer/state";
 
-const ArticleList = () => {
+const ArticleList: React.FC = () => {
+  const [cardList, dispatch] = useReducer(cardsReducer, cardsInitialState);
 
-const [cardList,setArticleList] = useState<{
-  name: string;
-  capital: string;
-  population: number;
-  component: string;
-  id:string;
-  vote:number;
-}[]>([
-  { name: 'Georgia',  capital:'Tbilisi', population:627361237, component:"Georgia", id:"1", vote: 0},
-  { name: 'USA',  capital:'Washington, D.C.', population:72873426374, component:"USA", id:"2", vote: 0 },
-  { name: 'France',capital: 'Paris', population:8347283748, component:"France",  id:"3", vote: 0},
-  { name: 'Germany', capital: 'Berlin', population:873248734, component:"Germany", id:"4",  vote: 0 },
-])
+  const handleArticleUpVote = (id: string) => {
+    dispatch({
+      type: "upvote",
+      payload: {
+        id,
+      },
+    });
+  };
 
-const handleArticleUpVote = (id:string) => {
-  
-    const updatedArticlesList = cardList.map(country => {
-      if (country.id === id) {
-        return {...country, vote: country.vote + 1}
-      }
-      return {...country};
-    })
-  
+  const sortCountries = (sortType: "sortByAlphabet" | "sortByPopulation") => {
+    dispatch({ type: "sort", payload: { sortType } });
+  };
 
+  const handleCreateArticle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cardFields: any = {};
+    const formData = new FormData(e.currentTarget);
 
-  
-  setArticleList(updatedArticlesList);
-}
+    for (const [key, value] of formData) {
+      cardFields[key] = value;
+    }
 
+    dispatch({ type: "update", payload: { cardFields } });
 
-const sortCountries = () => {
-  const sortedCountries = [...cardList].sort((a, b) => {
-    return a.name.localeCompare(b.name); 
-  });
+    e.currentTarget.reset();
+  };
 
-  setArticleList(sortedCountries);
-  console.log(sortedCountries);
-};
+  const handleArticleDelete = (e: MouseEvent, id: string) => {
+    e.preventDefault();
 
-const sortPopulation = () => {
-  const sortedPopulation = [...cardList].sort((a, b) => {
-    return a.population - b.population;
-  });
-  setArticleList(sortedPopulation);
-  console.log(sortedPopulation)
-}
-
+    dispatch({
+      type: "delete",
+      payload: {
+        id,
+      },
+    });
+  };
 
   return (
     <section>
       <Suspense fallback={<div>Loading...</div>}>
-      <button onClick={sortCountries} className={Styles.sort}>Sort [A-Z]</button>
-      <button onClick={sortPopulation} className={Styles.sort}>Sort population</button>
+        <button
+          onClick={() => sortCountries("sortByAlphabet")}
+          className={Styles.sort}
+        >
+          Sort [A-Z]
+        </button>
+        <button
+          onClick={() => sortCountries("sortByPopulation")}
+          className={Styles.sort}
+        >
+          Sort population
+        </button>
+
+        <CardCreateForm onCardCreate={handleCreateArticle} />
         <div className={Styles.container}>
           {cardList.map((country) => (
             <div key={country.id} className={Styles.div}>
               <Card id={country.id}>
-                <CardHeader 
-                 onUpVote={() => handleArticleUpVote(country.id)}
-                 voteCount={country.vote}>{country.name}</CardHeader>
+                <CardHeader
+                  onUpVote={() => handleArticleUpVote(country.id)}
+                  voteCount={country.vote}
+                >
+                  {country.name}
+                </CardHeader>
                 <CardContant>Population: {country.population}</CardContant>
                 <CardFooter>Capital: {country.capital}</CardFooter>
-                <div>
-                <Link style={{color:"white", fontSize: "18px"}} to={country.id}>
-See more
-</Link>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 10,
+                  }}
+                >
+                  <Link
+                    style={{ color: "white", fontSize: "18px" }}
+                    to={country.id}
+                  >
+                    See more
+                  </Link>
+                  <span
+                    style={{ color: "red", cursor: "pointer" }}
+                    onClick={(e) => {
+                      handleArticleDelete(e, country.id);
+                    }}
+                  >
+                    DELETE
+                  </span>
                 </div>
               </Card>
             </div>
@@ -81,7 +108,7 @@ See more
         </div>
       </Suspense>
     </section>
-  )
-}
+  );
+};
 
-export default ArticleList
+export default ArticleList;
